@@ -1,0 +1,145 @@
+{
+  "metadata": {
+    "investigation_id": "ad106e4c-92f6-47ad-a4e4-0ebe0833954e",
+    "title": "Reporte de Prueba - Cliente ACME",
+    "analyst_name": "Ana García",
+    "overall_risk_level": "critical",
+    "overall_risk_score": 94,
+    "ioc_count": 2,
+    "exported_at": "2026-03-11T16:05:51.456562",
+    "platform": "SOC Intel Platform v1.0"
+  },
+  "iocs": [
+    {
+      "value": "185.220.101.45",
+      "type": "ip",
+      "risk_score": 44,
+      "risk_level": "medium",
+      "summary": "🟡 IOC sospechoso: 185.220.101.45 | VirusTotal: 16/94 motores detectaron amenaza | AbuseIPDB: Confianza de abuso 95% (105 reportes)",
+      "tags": [
+        "abusive-ip",
+        "country:DE",
+        "malicious",
+        "tor"
+      ],
+      "enriched_at": "2026-03-11T16:04:17.579334",
+      "sources": {
+        "virustotal": {
+          "detected": true,
+          "malicious_count": 16,
+          "suspicious_count": 3,
+          "total_engines": 94,
+          "detection_ratio": "16/94",
+          "reputation": -21,
+          "categories": [],
+          "tags": [
+            "tor"
+          ],
+          "last_analysis_date": "2026-03-11T12:52:38",
+          "error": null,
+          "raw_data": {
+            "id": "185.220.101.45",
+            "type": "ip_address",
+            "last_analysis_stats": {
+              "malicious": 16,
+              "suspicious": 3,
+              "undetected": 30,
+              "harmless": 45,
+              "timeout": 0
+            }
+          }
+        },
+        "abuseipdb": {
+          "abuse_confidence_score": 95,
+          "total_reports": 105,
+          "num_distinct_users": 48,
+          "country_code": "DE",
+          "isp": "Network for Tor-Exit traffic.",
+          "domain": "for-privacy.net",
+          "usage_type": "Fixed Line ISP",
+          "is_whitelisted": false,
+          "last_reported_at": "2026-03-11T14:11:23+00:00",
+          "error": null,
+          "raw_data": {
+            "ipAddress": "185.220.101.45",
+            "isPublic": true,
+            "ipVersion": 4,
+            "abuseConfidenceScore": 95,
+            "countryCode": "DE",
+            "isp": "Network for Tor-Exit traffic.",
+            "usageType": "Fixed Line ISP",
+            "totalReports": 105,
+            "numDistinctUsers": 48
+          }
+        },
+        "shodan": {
+          "org": null,
+          "isp": null,
+          "country_name": null,
+          "city": null,
+          "open_ports": [],
+          "hostnames": [],
+          "os": null,
+          "tags": [],
+          "vulnerabilities": [],
+          "last_update": null,
+          "error": "HTTP 403: {\"error\": \"Requires membership or higher to access\"}",
+          "raw_data": {}
+        }
+      }
+    },
+    {
+      "value": "44d88612fea8a8f36de82e1278abb02f",
+      "type": "hash_md5",
+      "risk_score": 94,
+      "risk_level": "critical",
+      "summary": "⚠️ IOC de ALTO RIESGO: 44d88612fea8a8f36de82e1278abb02f | VirusTotal: 64/68 motores detectaron amenaza",
+      "tags": [
+        "attachment",
+        "detect-debug-environment",
+        "direct-cpu-clock-access",
+        "known-distributor",
+        "malicious",
+        "powershell"
+      ],
+      "enriched_at": "2026-03-11T16:04:17.580230",
+      "sources": {
+        "virustotal": {
+          "detected": true,
+          "malicious_count": 64,
+          "suspicious_count": 0,
+          "total_engines": 68,
+          "detection_ratio": "64/68",
+          "reputation": 3725,
+          "categories": [],
+          "tags": [
+            "powershell",
+            "detect-debug-environment",
+            "known-distributor",
+            "direct-cpu-clock-access",
+            "attachment",
+            "idle",
+            "long-sleeps",
+            "via-tor"
+          ],
+          "last_analysis_date": "2026-03-11T15:50:59",
+          "error": null,
+          "raw_data": {
+            "id": "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f",
+            "type": "file",
+            "last_analysis_stats": {
+              "malicious": 64,
+              "suspicious": 0,
+              "undetected": 4,
+              "harmless": 0,
+              "timeout": 1,
+              "confirmed-timeout": 0,
+              "failure": 0,
+              "type-unsupported": 7
+            }
+          }
+        }
+      }
+    }
+  ]
+}

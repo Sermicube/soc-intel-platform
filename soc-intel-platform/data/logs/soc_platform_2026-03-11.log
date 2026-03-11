@@ -1,0 +1,214 @@
+2026-03-11 14:49:57 | INFO | app.utils.logger:48 | Logger configurado correctamente
+2026-03-11 14:49:57 | INFO | app.main:29 | Arrancando SOC Intel Platform v1.0.0
+2026-03-11 14:49:57 | INFO | app.db.session:49 | Base de datos inicializada correctamente
+2026-03-11 14:49:57 | INFO | app.utils.cache:111 | Caché inicializado: maxsize=500, ttl=3600s
+2026-03-11 14:49:57 | INFO | app.main:43 | Integraciones activas: virustotal, abuseipdb, shodan
+2026-03-11 14:49:57 | INFO | app.main:50 | Servidor listo en http://0.0.0.0:8000
+2026-03-11 14:53:00 | INFO | app.db.repository:42 | Investigación creada: 45048da9-97e9-4faa-a6b2-c1df9a3e9b5c
+2026-03-11 14:53:00 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 5 IOCs
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 8.8.8.8
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: malware.ejemplo.com
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:80 | IOC tipo: domain | Fuentes: ['virustotal']
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: d41d8cd98f00b204e9800998ecf8427e
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_md5 | Fuentes: ['virustotal']
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: https://phishing.sitio.com/login
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:80 | IOC tipo: url | Fuentes: ['virustotal']
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca4
+2026-03-11 14:53:00 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_sha256 | Fuentes: ['virustotal']
+2026-03-11 14:53:01 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: 8.8.8.8 [ip]
+2026-03-11 14:53:01 | INFO | app.integrations.abuseipdb:53 | [AbuseIPDB] Consultando IP: 8.8.8.8
+2026-03-11 14:53:01 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 8.8.8.8
+2026-03-11 14:53:01 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: malware.ejemplo.com [domain]
+2026-03-11 14:53:01 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: d41d8cd98f00b204e9800998ecf8427e [hash_md5]
+2026-03-11 14:53:01 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: https://phishing.sitio.com/login [url]
+2026-03-11 14:53:01 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca4 [hash_sha256]
+2026-03-11 14:53:01 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: e3b0c44298fc1c149afbf4c8996fb9 → Score=0, Level=info
+2026-03-11 14:53:01 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: d41d8cd98f00b204e9800998ecf842 → Score=0, Level=info
+2026-03-11 14:53:01 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 8.8.8.8 → Score=3, Level=info
+2026-03-11 14:53:01 | WARNING | app.integrations.base:84 | [virustotal] HTTP 404 para https://www.virustotal.com/api/v3/domains/malware.ejemplo.com
+2026-03-11 14:53:01 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: malware.ejemplo.com → Score=0, Level=info
+2026-03-11 14:53:02 | WARNING | app.integrations.base:84 | [virustotal] HTTP 404 para https://www.virustotal.com/api/v3/urls/aHR0cHM6Ly9waGlzaGluZy5zaXRpby5jb20vbG9naW4
+2026-03-11 14:53:02 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: https://phishing.sitio.com/log → Score=0, Level=info
+2026-03-11 14:53:47 | INFO | app.db.repository:42 | Investigación creada: a88cdaf9-c600-4bb6-876f-fe06ae395ea2
+2026-03-11 14:53:47 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 5 IOCs
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 8.8.8.8
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: malware.ejemplo.com
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:80 | IOC tipo: domain | Fuentes: ['virustotal']
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: d41d8cd98f00b204e9800998ecf8427e
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_md5 | Fuentes: ['virustotal']
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: https://phishing.sitio.com/login
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:80 | IOC tipo: url | Fuentes: ['virustotal']
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca4
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_sha256 | Fuentes: ['virustotal']
+2026-03-11 14:53:47 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: malware.ejemplo.com [domain]
+2026-03-11 14:53:47 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: https://phishing.sitio.com/login [url]
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 8.8.8.8 → Score=3, Level=info
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: d41d8cd98f00b204e9800998ecf842 → Score=0, Level=info
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: e3b0c44298fc1c149afbf4c8996fb9 → Score=0, Level=info
+2026-03-11 14:53:47 | ERROR | app.integrations.base:94 | [virustotal] Error de red: 
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: malware.ejemplo.com → Score=0, Level=info
+2026-03-11 14:53:47 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: https://phishing.sitio.com/log → Score=0, Level=info
+2026-03-11 15:03:13 | INFO | app.db.repository:42 | Investigación creada: 93a68765-7900-4c59-9b49-96846370992f
+2026-03-11 15:03:13 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 1 IOCs
+2026-03-11 15:03:13 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 185.220.101.45
+2026-03-11 15:03:13 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 15:03:13 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: 185.220.101.45 [ip]
+2026-03-11 15:03:13 | INFO | app.integrations.abuseipdb:53 | [AbuseIPDB] Consultando IP: 185.220.101.45
+2026-03-11 15:03:13 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 185.220.101.45
+2026-03-11 15:03:13 | WARNING | app.integrations.base:84 | [shodan] HTTP 403 para https://api.shodan.io/shodan/host/185.220.101.45
+2026-03-11 15:03:13 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 185.220.101.45 → Score=44, Level=medium
+2026-03-11 15:04:44 | INFO | app.db.repository:42 | Investigación creada: 9501c87d-a896-453a-a7b7-980bfa75fb93
+2026-03-11 15:04:44 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 1 IOCs
+2026-03-11 15:04:44 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 185.220.101.45
+2026-03-11 15:04:44 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 15:04:44 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 185.220.101.45
+2026-03-11 15:04:44 | WARNING | app.integrations.base:84 | [shodan] HTTP 403 para https://api.shodan.io/shodan/host/185.220.101.45
+2026-03-11 15:04:44 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 185.220.101.45 → Score=44, Level=medium
+2026-03-11 15:05:14 | INFO | app.reports.builder:47 | Generando reporte [PDF] para investigación 9501c87d
+2026-03-11 15:05:14 | INFO | app.reports.pdf_generator:173 | PDF generado: data/reports/incident_report_9501c87d_20260311_150514.pdf
+2026-03-11 15:05:14 | INFO | app.db.repository:151 | Reporte guardado: cd6c8c83-3196-4fb7-88f7-ae28d51dfa4e [pdf]
+2026-03-11 16:01:38 | INFO | app.utils.logger:48 | Logger configurado correctamente
+2026-03-11 16:01:38 | INFO | app.main:29 | Arrancando SOC Intel Platform v1.0.0
+2026-03-11 16:01:38 | INFO | app.db.session:49 | Base de datos inicializada correctamente
+2026-03-11 16:01:38 | INFO | app.utils.cache:111 | Caché inicializado: maxsize=500, ttl=3600s
+2026-03-11 16:01:38 | INFO | app.main:43 | Integraciones activas: virustotal, abuseipdb, shodan
+2026-03-11 16:01:38 | INFO | app.main:50 | Servidor listo en http://0.0.0.0:8000
+2026-03-11 16:03:38 | INFO | app.db.repository:42 | Investigación creada: 8d4fe0f2-7331-419e-b74d-04fefe18c337
+2026-03-11 16:03:38 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 1 IOCs
+2026-03-11 16:03:38 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 8.8.8.8
+2026-03-11 16:03:38 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:03:38 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: 8.8.8.8 [ip]
+2026-03-11 16:03:38 | INFO | app.integrations.abuseipdb:53 | [AbuseIPDB] Consultando IP: 8.8.8.8
+2026-03-11 16:03:38 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 8.8.8.8
+2026-03-11 16:03:38 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 8.8.8.8 → Score=3, Level=info
+2026-03-11 16:03:38 | INFO | app.db.repository:42 | Investigación creada: 8cb99e0a-6bb7-4551-8a8f-7d8859b5022c
+2026-03-11 16:03:38 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 1 IOCs
+2026-03-11 16:03:38 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 8.8.8.8
+2026-03-11 16:03:38 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:03:38 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 8.8.8.8 → Score=3, Level=info
+2026-03-11 16:04:16 | INFO | app.db.repository:42 | Investigación creada: ad106e4c-92f6-47ad-a4e4-0ebe0833954e
+2026-03-11 16:04:16 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 2 IOCs
+2026-03-11 16:04:16 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 185.220.101.45
+2026-03-11 16:04:16 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:04:16 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 44d88612fea8a8f36de82e1278abb02f
+2026-03-11 16:04:16 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_md5 | Fuentes: ['virustotal']
+2026-03-11 16:04:16 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: 185.220.101.45 [ip]
+2026-03-11 16:04:16 | INFO | app.integrations.abuseipdb:53 | [AbuseIPDB] Consultando IP: 185.220.101.45
+2026-03-11 16:04:16 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 185.220.101.45
+2026-03-11 16:04:17 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: 44d88612fea8a8f36de82e1278abb02f [hash_md5]
+2026-03-11 16:04:17 | WARNING | app.integrations.base:84 | [shodan] HTTP 403 para https://api.shodan.io/shodan/host/185.220.101.45
+2026-03-11 16:04:17 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 44d88612fea8a8f36de82e1278abb0 → Score=94, Level=critical
+2026-03-11 16:04:17 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 185.220.101.45 → Score=44, Level=medium
+2026-03-11 16:04:30 | INFO | app.reports.builder:47 | Generando reporte [PDF] para investigación ad106e4c
+2026-03-11 16:04:30 | INFO | app.reports.pdf_generator:173 | PDF generado: data/reports/incident_report_ad106e4c_20260311_160430.pdf
+2026-03-11 16:04:30 | INFO | app.db.repository:151 | Reporte guardado: 15723e3f-7acd-4190-a276-478742eee43a [pdf]
+2026-03-11 16:04:43 | INFO | app.reports.builder:47 | Generando reporte [DOCX] para investigación ad106e4c
+2026-03-11 16:04:43 | INFO | app.reports.word_generator:73 | Word generado: data/reports/incident_report_ad106e4c_20260311_160443.docx
+2026-03-11 16:04:43 | INFO | app.db.repository:151 | Reporte guardado: ae2d3f4f-5bd3-4559-856c-26a43b733104 [docx]
+2026-03-11 16:05:51 | INFO | app.reports.builder:47 | Generando reporte [JSON] para investigación ad106e4c
+2026-03-11 16:05:51 | INFO | app.reports.json_exporter:135 | JSON exportado: data/reports/investigation_ad106e4c_20260311_160551.json
+2026-03-11 16:05:51 | INFO | app.db.repository:151 | Reporte guardado: 52b23088-c8a3-4440-a8d1-fe290498034e [json]
+2026-03-11 16:06:04 | INFO | app.reports.builder:47 | Generando reporte [CSV] para investigación ad106e4c
+2026-03-11 16:06:04 | INFO | app.reports.json_exporter:223 | CSV exportado: data/reports/iocs_ad106e4c_20260311_160604.csv
+2026-03-11 16:06:04 | INFO | app.db.repository:151 | Reporte guardado: 882d54c1-b5d8-4647-bd8b-3baeab50d2db [csv]
+2026-03-11 16:06:08 | INFO | app.reports.builder:47 | Generando reporte [PDF] para investigación ad106e4c
+2026-03-11 16:06:09 | INFO | app.reports.pdf_generator:173 | PDF generado: data/reports/incident_report_ad106e4c_20260311_160608.pdf
+2026-03-11 16:06:09 | INFO | app.db.repository:151 | Reporte guardado: 6ff33d12-00cd-4cdb-91bf-01b2c7fa5aea [pdf]
+2026-03-11 16:06:35 | INFO | app.db.repository:88 | Investigación eliminada: ad106e4c-92f6-47ad-a4e4-0ebe0833954e
+2026-03-11 16:12:12 | INFO | app.db.repository:42 | Investigación creada: 0f80c40f-ac7f-4036-8435-5c203add2672
+2026-03-11 16:12:12 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 1 IOCs
+2026-03-11 16:12:12 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:12 | WARNING | app.core.ioc_detector:122 | IOC no reconocido: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:12 | WARNING | app.core.enrichment_engine:71 | IOC de tipo desconocido: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:43 | INFO | app.db.repository:42 | Investigación creada: a89c2cf3-d04f-4a6e-b5a1-3cbe55d7c4a2
+2026-03-11 16:12:43 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 1 IOCs
+2026-03-11 16:12:43 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:43 | WARNING | app.core.ioc_detector:122 | IOC no reconocido: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:43 | WARNING | app.core.enrichment_engine:71 | IOC de tipo desconocido: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:52 | INFO | app.db.repository:42 | Investigación creada: b0e40768-f052-4949-9c6b-8ebb53527224
+2026-03-11 16:12:52 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 1 IOCs
+2026-03-11 16:12:52 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:52 | WARNING | app.core.ioc_detector:122 | IOC no reconocido: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:12:52 | WARNING | app.core.enrichment_engine:71 | IOC de tipo desconocido: esto_no_es_un_ioc_valido_!!##
+2026-03-11 16:14:15 | INFO | app.db.repository:42 | Investigación creada: 78adeb8b-0175-4827-9a60-e171a31f3dd0
+2026-03-11 16:14:15 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 3 IOCs
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 8.8.8.8
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 44d88612fea8a8f36de82e1278abb02f
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_md5 | Fuentes: ['virustotal']
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: google.com
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:80 | IOC tipo: domain | Fuentes: ['virustotal']
+2026-03-11 16:14:15 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: google.com [domain]
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 8.8.8.8 → Score=3, Level=info
+2026-03-11 16:14:15 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 44d88612fea8a8f36de82e1278abb0 → Score=94, Level=critical
+2026-03-11 16:14:16 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: google.com → Score=0, Level=info
+2026-03-11 16:14:16 | INFO | app.reports.builder:47 | Generando reporte [PDF] para investigación 78adeb8b
+2026-03-11 16:14:16 | INFO | app.reports.pdf_generator:173 | PDF generado: data/reports/incident_report_78adeb8b_20260311_161416.pdf
+2026-03-11 16:14:16 | INFO | app.db.repository:151 | Reporte guardado: 7330c6b4-e6fd-41a8-9f04-1c62b36041ae [pdf]
+2026-03-11 16:15:44 | INFO | app.db.repository:42 | Investigación creada: bb308ede-3f0c-42b3-8574-8dd4a1d72000
+2026-03-11 16:15:44 | INFO | app.api.v1.investigations:62 | Iniciando análisis de 12 IOCs
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 185.220.101.45
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 45.33.32.156
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 198.199.119.148
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: malware-delivery.ru
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:80 | IOC tipo: domain | Fuentes: ['virustotal']
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: phishing-login-secure.com
+2026-03-11 16:15:44 | INFO | app.core.enrichment_engine:80 | IOC tipo: domain | Fuentes: ['virustotal']
+2026-03-11 16:15:44 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 185.220.101.45
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: 45.33.32.156 [ip]
+2026-03-11 16:15:45 | INFO | app.integrations.abuseipdb:53 | [AbuseIPDB] Consultando IP: 45.33.32.156
+2026-03-11 16:15:45 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 45.33.32.156
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: 198.199.119.148 [ip]
+2026-03-11 16:15:45 | INFO | app.integrations.abuseipdb:53 | [AbuseIPDB] Consultando IP: 198.199.119.148
+2026-03-11 16:15:45 | INFO | app.integrations.shodan:48 | [Shodan] Consultando IP: 198.199.119.148
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: malware-delivery.ru [domain]
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: phishing-login-secure.com [domain]
+2026-03-11 16:15:45 | ERROR | app.integrations.base:94 | [shodan] Error de red: 
+2026-03-11 16:15:45 | ERROR | app.integrations.base:94 | [abuseipdb] Error de red: 
+2026-03-11 16:15:45 | WARNING | app.integrations.base:84 | [shodan] HTTP 403 para https://api.shodan.io/shodan/host/185.220.101.45
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 185.220.101.45 → Score=44, Level=medium
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: update-windows-patch.net
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:80 | IOC tipo: domain | Fuentes: ['virustotal']
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: update-windows-patch.net [domain]
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: malware-delivery.ru → Score=0, Level=info
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 44d88612fea8a8f36de82e1278abb02f
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_md5 | Fuentes: ['virustotal']
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 44d88612fea8a8f36de82e1278abb0 → Score=94, Level=critical
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca4
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:80 | IOC tipo: hash_sha256 | Fuentes: ['virustotal']
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca4 [hash_sha256]
+2026-03-11 16:15:45 | ERROR | app.integrations.base:94 | [virustotal] Error de red: 
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 198.199.119.148 → Score=0, Level=info
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: https://malware-delivery.ru/payload.exe
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:80 | IOC tipo: url | Fuentes: ['virustotal']
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: e3b0c44298fc1c149afbf4c8996fb9 → Score=0, Level=info
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: https://malware-delivery.ru/payload.exe [url]
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: https://phishing-login-secure.com/account/verify
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:80 | IOC tipo: url | Fuentes: ['virustotal']
+2026-03-11 16:15:45 | INFO | app.integrations.virustotal:63 | [VirusTotal] Consultando: https://phishing-login-secure.com/account/verify [url]
+2026-03-11 16:15:45 | WARNING | app.integrations.base:84 | [virustotal] HTTP 404 para https://www.virustotal.com/api/v3/domains/phishing-login-secure.com
+2026-03-11 16:15:45 | ERROR | app.integrations.base:94 | [virustotal] Error de red: 
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: phishing-login-secure.com → Score=0, Level=info
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: 8.8.8.8
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:80 | IOC tipo: ip | Fuentes: ['virustotal', 'abuseipdb', 'shodan']
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: https://phishing-login-secure. → Score=0, Level=info
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:64 | Iniciando enriquecimiento: google.com
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:80 | IOC tipo: domain | Fuentes: ['virustotal']
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 8.8.8.8 → Score=3, Level=info
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: google.com → Score=0, Level=info
+2026-03-11 16:15:45 | WARNING | app.integrations.base:84 | [virustotal] HTTP 404 para https://www.virustotal.com/api/v3/domains/update-windows-patch.net
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: update-windows-patch.net → Score=0, Level=info
+2026-03-11 16:15:45 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: 45.33.32.156 → Score=12, Level=info
+2026-03-11 16:15:46 | WARNING | app.integrations.base:84 | [virustotal] HTTP 404 para https://www.virustotal.com/api/v3/urls/aHR0cHM6Ly9tYWx3YXJlLWRlbGl2ZXJ5LnJ1L3BheWxvYWQuZXhl
+2026-03-11 16:15:46 | INFO | app.core.enrichment_engine:109 | Enriquecimiento completo: https://malware-delivery.ru/pa → Score=0, Level=info
+2026-03-11 16:17:39 | INFO | app.reports.builder:47 | Generando reporte [CSV] para investigación bb308ede
+2026-03-11 16:17:39 | INFO | app.reports.json_exporter:223 | CSV exportado: data/reports/iocs_bb308ede_20260311_161739.csv
+2026-03-11 16:17:39 | INFO | app.db.repository:151 | Reporte guardado: aa30eb4c-5a86-48c6-9b50-ade702ef4211 [csv]
+2026-03-11 16:18:12 | INFO | app.reports.builder:47 | Generando reporte [PDF] para investigación bb308ede
+2026-03-11 16:18:12 | INFO | app.reports.pdf_generator:173 | PDF generado: data/reports/incident_report_bb308ede_20260311_161812.pdf
+2026-03-11 16:18:12 | INFO | app.db.repository:151 | Reporte guardado: edb698c5-5132-4afb-8937-91cf3bf76e70 [pdf]

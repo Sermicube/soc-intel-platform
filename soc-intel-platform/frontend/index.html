@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOC Intel Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    :root {
+      --bg-base:      #080c14;
+      --bg-panel:     #0d1526;
+      --bg-card:      #111d33;
+      --bg-input:     #0a1220;
+      --border:       #1a2d4a;
+      --border-glow:  #00d4aa40;
+      --accent:       #00d4aa;
+      --accent-dim:   #00d4aa22;
+      --accent-2:     #0084ff;
+      --text-pri:     #e8f4f0;
+      --text-sec:     #7a9bb5;
+      --text-dim:     #3d5a72;
+      --critical:     #ff3c3c;
+      --high:         #ff7a00;
+      --medium:       #ffcc00;
+      --low:          #44cc66;
+      --info:         #4488ff;
+      --font-mono:    'Share Tech Mono', monospace;
+      --font-ui:      'Rajdhani', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-pri);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Grid background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Top scanline effect ── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: scanline 4s ease-in-out infinite;
+      z-index: 100;
+    }
+    @keyframes scanline {
+      0%,100% { opacity: 0.3; transform: scaleX(0.3); }
+      50% { opacity: 1; transform: scaleX(1); }
+    }
+
+    /* ─────────────── HEADER ─────────────── */
+    header {
+      position: relative;
+      z-index: 10;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .status-bar {
+      display: flex; align-items: center; gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-sec);
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+    /* ─────────────── LAYOUT ─────────────── */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─────────────── TABS ─────────────── */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .tab {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.4rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-dim);
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: var(--text-sec); }
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ─────────────── PANEL ─────────────── */
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .panel-title {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─────────────── FORM ─────────────── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-sec);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    input, textarea {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-pri);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      padding: 0.6rem 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    textarea { resize: vertical; min-height: 100px; }
+
+    /* IOC Input Area */
+    .ioc-input-area {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--text-pri);
+      width: 100%;
+      min-height: 120px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: vertical;
+    }
+    .ioc-input-area:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    .ioc-hint {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* IOC Tags Preview */
+    .ioc-tags {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.8rem;
+    }
+    .ioc-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .ioc-tag.ip    { border-color: var(--accent-2); color: var(--accent-2); background: #0084ff15; }
+    .ioc-tag.domain{ border-color: var(--accent);   color: var(--accent);   background: #00d4aa15; }
+    .ioc-tag.hash  { border-color: #aa44ff;          color: #aa44ff;         background: #aa44ff15; }
+    .ioc-tag.url   { border-color: #ff8800;          color: #ff8800;         background: #ff880015; }
+    .ioc-tag.unknown{ border-color: var(--text-dim); color: var(--text-dim); background: transparent; }
+    .tag-remove { cursor: pointer; opacity: 0.6; }
+    .tag-remove:hover { opacity: 1; }
+
+    /* ─────────────── BUTTONS ─────────────── */
+    .btn {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.8rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-base);
+    }
+    .btn-primary:hover { background: #00f5c4; box-shadow: 0 0 20px var(--accent); }
+    .btn-primary:disabled {
+      background: var(--text-dim);
+      color: var(--bg-panel);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent-dim); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-sec);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--text-sec); color: var(--text-pri); }
+    .btn-danger {
+      background: transparent;
+      color: var(--critical);
+      border: 1px solid var(--critical);
+    }
+    .btn-danger:hover { background: #ff3c3c15; }
+    .btn-sm { padding: 0.4rem 1rem; font-size: 0.78rem; }
+
+    /* ─────────────── RISK BADGE ─────────────── */
+    .risk-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .risk-critical { background: #ff3c3c20; color: var(--critical); border: 1px solid var(--critical); }
+    .risk-high     { background: #ff7a0020; color: var(--high);     border: 1px solid var(--high); }
+    .risk-medium   { background: #ffcc0020; color: var(--medium);   border: 1px solid var(--medium); }
+    .risk-low      { background: #44cc6620; color: var(--low);      border: 1px solid var(--low); }
+    .risk-info     { background: #4488ff20; color: var(--info);     border: 1px solid var(--info); }
+
+    /* ─────────────── LOADING ─────────────── */
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      gap: 1rem;
+    }
+    .loader-ring {
+      width: 48px; height: 48px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loader-text {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-sec);
+      animation: blink 1s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    /* ─────────────── IOC RESULT CARD ─────────────── */
+    .ioc-result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .ioc-result-card:hover { border-color: var(--accent); }
+
+    .ioc-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.2rem;
+      cursor: pointer;
+      gap: 1rem;
+    }
+    .ioc-card-header:hover { background: rgba(0,212,170,0.04); }
+
+    .ioc-value {
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      color: var(--text-pri);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .ioc-type-chip {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-sec);
+      white-space: nowrap;
+    }
+
+    .ioc-card-body {
+      padding: 1rem 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+    .ioc-summary {
+      font-size: 0.82rem;
+      color: var(--text-sec);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Source grid */
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.8rem;
+    }
+    .source-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.9rem;
+    }
+    .source-name {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .source-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      padding: 2px 0;
+    }
+    .source-key { color: var(--text-dim); font-family: var(--font-mono); }
+    .source-val { color: var(--text-pri); font-family: var(--font-mono); text-align: right; }
+    .source-error { font-size: 0.75rem; color: var(--critical); font-family: var(--font-mono); }
+
+    /* Tags row */
+    .result-tags {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-top: 0.8rem;
+    }
+    .result-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    /* ─────────────── SCORE BAR ─────────────── */
+    .score-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .score-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+
+    /* ─────────────── HISTORY TABLE ─────────────── */
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .history-table th {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      text-align: left;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .history-table td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-pri);
+      vertical-align: middle;
+    }
+    .history-table tr:hover td { background: rgba(0,212,170,0.03); }
+    .history-table tr:last-child td { border-bottom: none; }
+
+    /* ─────────────── REPORT PANEL ─────────────── */
+    .report-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .report-format-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .report-format-card:hover { border-color: var(--accent); }
+    .report-format-card.selected {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .format-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .format-name {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-pri);
+    }
+    .format-desc { font-size: 0.72rem; color: var(--text-dim); margin-top: 3px; }
+
+    /* ─────────────── OVERALL SCORE ─────────────── */
+    .overall-score-display {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .score-circle {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid;
+      flex-shrink: 0;
+    }
+    .score-circle .score-num {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    .score-circle .score-lbl {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      opacity: 0.7;
+    }
+    .score-details { flex: 1; }
+    .score-title {
+      font-family: var(--font-ui);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .score-meta { font-size: 0.8rem; color: var(--text-sec); }
+
+    /* ─────────────── ALERT ─────────────── */
+    .alert {
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+    .alert-error { background: #ff3c3c15; border: 1px solid var(--critical); color: var(--critical); }
+    .alert-success { background: #00d4aa15; border: 1px solid var(--accent); color: var(--accent); }
+    .alert-warning { background: #ff7a0015; border: 1px solid var(--high); color: var(--high); }
+
+    /* ─────────────── UTILS ─────────────── */
+    .flex { display: flex; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-4 { gap: 1rem; }
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-4 { margin-top: 1rem; }
+    .text-dim { color: var(--text-dim); font-size: 0.82rem; }
+    .text-mono { font-family: var(--font-mono); }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-dim);
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+    .empty-text { font-family: var(--font-mono); font-size: 0.82rem; }
+
+    /* Chevron */
+    .chevron {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      transition: transform 0.2s;
+      margin-left: auto;
+    }
+    .chevron.open { transform: rotate(180deg); }
+
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .report-options { grid-template-columns: 1fr 1fr; }
+      .sources-grid { grid-template-columns: 1fr; }
+      .overall-score-display { flex-direction: column; }
+    }
+  </style>
+</head>
+<body x-data="socApp()" x-init="init()">
+
+  <!-- Header -->
+  <header>
+    <a class="logo" href="/">
+      <div class="logo-icon">🛡</div>
+      SOC INTEL PLATFORM
+    </a>
+    <div class="status-bar">
+      <span x-show="health.integrations && health.integrations.length > 0" class="flex items-center gap-2">
+        <span class="status-dot"></span>
+        <span x-text="'APIs: ' + (health.integrations || []).join(' · ').toUpperCase()"></span>
+      </span>
+      <span x-show="!health.integrations || health.integrations.length === 0" class="flex items-center gap-2" style="color: var(--high)">
+        ⚠ MODO DEMO — Sin API keys
+      </span>
+      <span style="color: var(--text-dim)">|</span>
+      <span x-text="currentTime"></span>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <div class="container">
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab" :class="{ active: tab === 'investigate' }" @click="tab = 'investigate'">
+        🔍 Investigar IOCs
+      </button>
+      <button class="tab" :class="{ active: tab === 'results' }" @click="tab = 'results'" x-show="lastInvestigation">
+        📊 Resultados
+      </button>
+      <button class="tab" :class="{ active: tab === 'history' }" @click="tab = 'history'; loadHistory()">
+        📁 Historial
+      </button>
+      <button class="tab" :class="{ active: tab === 'report' }" @click="tab = 'report'" x-show="lastInvestigation">
+        📄 Generar Reporte
+      </button>
+    </div>
+
+    <!-- ─── TAB: INVESTIGATE ─── -->
+    <div x-show="tab === 'investigate'">
+
+      <!-- Alerts -->
+      <div x-show="errorMsg" class="alert alert-error">
+        <span>⚠</span>
+        <span x-text="errorMsg"></span>
+      </div>
+
+      <!-- Input Form -->
+      <div class="panel">
+        <div class="panel-title">📡 Nueva Investigación</div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Título de la investigación</label>
+            <input type="text" x-model="form.title" placeholder="Ej: Análisis phishing campaña Q1 2025" />
+          </div>
+          <div class="form-group">
+            <label>Nombre del analista</label>
+            <input type="text" x-model="form.analyst" placeholder="Ej: Ana García" />
+          </div>
+          <div class="form-group full">
+            <label>IOCs a analizar <span style="color:var(--text-dim)">(uno por línea o separados por coma)</span></label>
+            <textarea
+              class="ioc-input-area"
+              x-model="iocRaw"
+              @input="parseIOCs()"
+              placeholder="Introduce IOCs:&#10;8.8.8.8&#10;malware.example.com&#10;d41d8cd98f00b204e9800998ecf8427e&#10;https://phishing.site/login"
+            ></textarea>
+            <div class="ioc-hint">Soporta: IPs, dominios, hashes (MD5/SHA1/SHA256), URLs</div>
+
+            <!-- IOC Tags Preview -->
+            <div class="ioc-tags" x-show="parsedIOCs.length > 0">
+              <template x-for="(ioc, i) in parsedIOCs" :key="i">
+                <span class="ioc-tag" :class="ioc.type">
+                  <span x-text="ioc.typeLabel"></span>
+                  <span style="color: var(--text-pri)" x-text="ioc.value.length > 30 ? ioc.value.substring(0,30)+'...' : ioc.value"></span>
+                  <span class="tag-remove" @click="removeIOC(i)">✕</span>
+                </span>
+              </template>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Notas adicionales <span style="color:var(--text-dim)">(opcional)</span></label>
+            <textarea x-model="form.notes" placeholder="Contexto del incidente, vector de ataque, sistemas afectados..." style="min-height: 70px;"></textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 mt-4" style="justify-content: flex-end;">
+          <span class="text-dim text-mono" x-show="parsedIOCs.length > 0" x-text="parsedIOCs.length + ' IOCs listos para análisis'"></span>
+          <button
+            class="btn btn-primary"
+            @click="runInvestigation()"
+            :disabled="loading || parsedIOCs.length === 0"
+          >
+            <span x-show="!loading">⚡ Iniciar Análisis</span>
+            <span x-show="loading">Analizando...</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div x-show="loading" class="panel">
+        <div class="loader">
+          <div class="loader-ring"></div>
+          <div class="loader-text">CONSULTANDO FUENTES DE INTELIGENCIA...</div>
+          <div style="font-size:0.72rem; color: var(--text-dim); font-family: var(--font-mono);" x-text="loadingMsg"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── TAB: RESULTS ─── -->
+    <div x-show="tab === 'results' && lastInvestigation">
+
+      <!-- Overall Score -->
+      <template x-if="lastInvestigation">
+        <div>
+          <div class="overall-score-display">
+            <div class="score-circle" :style="'border-color: ' + getRiskColor(lastInvestigation.overall_risk_level)">
+              <span class="score-num" :style="'color: ' + getRiskColor(lastInvestigation.overall_risk_level)"
+                    x-text="lastInvestigation.overall_risk_score"></span>
+              <span class="score-lbl">/ 100</span>
+            </div>
+            <div class="score-details">
+              <div class="score-title" x-text="lastInvestigation.title"></div>
+              <div class="score-meta">
+                <span x-text="'Analista: ' + lastInvestigation.analyst_name"></span> ·
+                <span x-text="formatDate(lastInvestigation.created_at)"></span> ·
+                <span x-text="lastInvestigation.ioc_results.length + ' IOCs analizados'"></span>
+              </div>
+              <div class="mt-2">
+                <span class="risk-badge" :class="'risk-' + lastInvestigation.overall_risk_level"
+                      x-text="'Riesgo: ' + lastInvestigation.overall_risk_level.toUpperCase()"></span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-outline btn-sm" @click="tab = 'report'">📄 Generar Reporte</button>
+            </div>
+          </div>
+
+          <!-- IOC Results -->
+          <div class="panel-title">📋 Resultados por IOC</div>
+
+          <template x-for="(result, idx) in lastInvestigation.ioc_results" :key="idx">
+            <div class="ioc-result-card">
+              <div class="ioc-card-header" @click="toggleCard(idx)">
+                <span class="ioc-type-chip" x-text="result.ioc_type.toUpperCase()"></span>
+                <span class="ioc-value" x-text="result.ioc_value"></span>
+                <span class="risk-badge" :class="'risk-' + result.risk_level"
+                      x-text="result.risk_level.toUpperCase() + ' ' + result.risk_score + '/100'"></span>
+                <span class="chevron" :class="{ open: openCards.includes(idx) }">▼</span>
+              </div>
+
+              <div class="ioc-card-body" x-show="openCards.includes(idx)" x-transition>
+
+                <div class="ioc-summary" x-text="result.summary || 'Sin resumen disponible.'"></div>
+
+                <!-- Score bar -->
+                <div class="score-bar">
+                  <div class="score-fill"
+                       :style="'width:' + result.risk_score + '%; background:' + getRiskColor(result.risk_level)"></div>
+                </div>
+
+                <!-- Sources -->
+                <div class="sources-grid mt-4">
+
+                  <!-- VirusTotal -->
+                  <div class="source-card" x-show="result.virustotal">
+                    <div class="source-name">🔍 VirusTotal</div>
+                    <template x-if="result.virustotal && !result.virustotal.error">
+                      <div>
+                        <div class="source-row">
+                          <span class="source-key">Detecciones</span>
+                          <span class="source-val"
+                                :style="result.virustotal.malicious_count > 0 ? 'color: var(--critical)' : 'color: var(--low)'"
+                                x-text="result.virustotal.detection_ratio"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">Sospechosos</span>
+                          <span class="source-val" x-text="result.virustotal.suspicious_count"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">Reputación</span>
+                          <span class="source-val" x-text="result.virustotal.reputation"></span>
+                        </div>
+                        <template x-if="result.virustotal.categories && result.virustotal.categories.length > 0">
+                          <div class="source-row">
+                            <span class="source-key">Categoría</span>
+                            <span class="source-val" x-text="result.virustotal.categories[0]"></span>
+                          </div>
+                        </template>
+                      </div>
+                    </template>
+                    <template x-if="result.virustotal && result.virustotal.error">
+                      <div class="source-error" x-text="result.virustotal.error"></div>
+                    </template>
+                    <template x-if="!result.virustotal">
+                      <div class="source-error">No aplica para este tipo de IOC</div>
+                    </template>
+                  </div>
+
+                  <!-- AbuseIPDB -->
+                  <div class="source-card" x-show="result.abuseipdb">
+                    <div class="source-name">🚫 AbuseIPDB</div>
+                    <template x-if="result.abuseipdb && !result.abuseipdb.error">
+                      <div>
+                        <div class="source-row">
+                          <span class="source-key">Confianza abuso</span>
+                          <span class="source-val"
+                                :style="result.abuseipdb.abuse_confidence_score > 50 ? 'color: var(--critical)' : ''"
+                                x-text="result.abuseipdb.abuse_confidence_score + '%'"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">Reportes</span>
+                          <span class="source-val" x-text="result.abuseipdb.total_reports"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">País</span>
+                          <span class="source-val" x-text="result.abuseipdb.country_code || 'N/A'"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">ISP</span>
+                          <span class="source-val" x-text="(result.abuseipdb.isp || 'N/A').substring(0,20)"></span>
+                        </div>
+                      </div>
+                    </template>
+                    <template x-if="result.abuseipdb && result.abuseipdb.error">
+                      <div class="source-error" x-text="result.abuseipdb.error"></div>
+                    </template>
+                  </div>
+
+                  <!-- Shodan -->
+                  <div class="source-card" x-show="result.shodan">
+                    <div class="source-name">🌐 Shodan</div>
+                    <template x-if="result.shodan && !result.shodan.error">
+                      <div>
+                        <div class="source-row">
+                          <span class="source-key">Puertos</span>
+                          <span class="source-val" x-text="result.shodan.open_ports ? result.shodan.open_ports.slice(0,5).join(', ') : 'N/A'"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">Org</span>
+                          <span class="source-val" x-text="(result.shodan.org || 'N/A').substring(0,18)"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">País</span>
+                          <span class="source-val" x-text="result.shodan.country_name || 'N/A'"></span>
+                        </div>
+                        <div class="source-row">
+                          <span class="source-key">CVEs</span>
+                          <span class="source-val"
+                                :style="result.shodan.vulnerabilities && result.shodan.vulnerabilities.length > 0 ? 'color: var(--high)' : ''"
+                                x-text="result.shodan.vulnerabilities ? result.shodan.vulnerabilities.length : 0"></span>
+                        </div>
+                      </div>
+                    </template>
+                    <template x-if="result.shodan && result.shodan.error">
+                      <div class="source-error" x-text="result.shodan.error"></div>
+                    </template>
+                  </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="result-tags" x-show="result.tags && result.tags.length > 0">
+                  <template x-for="tag in result.tags" :key="tag">
+                    <span class="result-tag" x-text="tag"></span>
+                  </template>
+                </div>
+
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
+
+    <!-- ─── TAB: HISTORY ─── -->
+    <div x-show="tab === 'history'">
+      <div class="panel">
+        <div class="panel-title">📁 Investigaciones Guardadas</div>
+
+        <div x-show="historyLoading" class="loader" style="padding: 2rem;">
+          <div class="loader-ring"></div>
+        </div>
+
+        <div x-show="!historyLoading && history.length === 0" class="empty-state">
+          <div class="empty-icon">📂</div>
+          <div class="empty-text">No hay investigaciones guardadas todavía.</div>
+        </div>
+
+        <table class="history-table" x-show="!historyLoading && history.length > 0">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Analista</th>
+              <th>IOCs</th>
+              <th>Riesgo</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="inv in history" :key="inv.id">
+              <tr>
+                <td>
+                  <span style="font-family: var(--font-mono); font-size: 0.82rem;" x-text="inv.title"></span>
+                </td>
+                <td class="text-dim" x-text="inv.analyst_name"></td>
+                <td class="text-mono" x-text="inv.ioc_count"></td>
+                <td>
+                  <span class="risk-badge" :class="'risk-' + inv.overall_risk_level"
+                        x-text="inv.overall_risk_level.toUpperCase()"></span>
+                </td>
+                <td>
+                  <span style="font-size:0.75rem; font-family: var(--font-mono);"
+                        :style="inv.status === 'completed' ? 'color: var(--low)' : 'color: var(--text-dim)'"
+                        x-text="inv.status"></span>
+                </td>
+                <td class="text-dim text-mono" x-text="formatDate(inv.created_at)"></td>
+                <td>
+                  <div class="flex gap-2">
+                    <button class="btn btn-ghost btn-sm" @click="loadInvestigation(inv.id)">Ver</button>
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─── TAB: REPORT ─── -->
+    <div x-show="tab === 'report' && lastInvestigation">
+      <div class="panel">
+        <div class="panel-title">📄 Generar Reporte de Incidente</div>
+
+        <div x-show="reportSuccess" class="alert alert-success">
+          ✓ Reporte generado. <a :href="reportDownloadUrl" style="color: var(--accent); margin-left: 8px;">⬇ Descargar ahora</a>
+        </div>
+        <div x-show="reportError" class="alert alert-error" x-text="reportError"></div>
+
+        <!-- Format selector -->
+        <div class="report-options">
+          <div class="report-format-card" :class="{ selected: reportFormat === 'pdf' }" @click="reportFormat = 'pdf'">
+            <div class="format-icon">📕</div>
+            <div class="format-name">PDF</div>
+            <div class="format-desc">Reporte profesional para clientes</div>
+          </div>
+          <div class="report-format-card" :class="{ selected: reportFormat === 'docx' }" @click="reportFormat = 'docx'">
+            <div class="format-icon">📘</div>
+            <div class="format-name">Word</div>
+            <div class="format-desc">Editable antes de enviar</div>
+          </div>
+          <div class="report-format-card" :class="{ selected: reportFormat === 'json' }" @click="reportFormat = 'json'">
+            <div class="format-icon">🗄</div>
+            <div class="format-name">JSON</div>
+            <div class="format-desc">Integración con SIEM/SOAR</div>
+          </div>
+          <div class="report-format-card" :class="{ selected: reportFormat === 'csv' }" @click="reportFormat = 'csv'">
+            <div class="format-icon">📊</div>
+            <div class="format-name">CSV</div>
+            <div class="format-desc">Análisis en Excel</div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre del cliente (opcional)</label>
+            <input type="text" x-model="reportClientName" placeholder="Ej: ACME Corporation" />
+          </div>
+          <div class="form-group">
+            <label>Título personalizado (opcional)</label>
+            <input type="text" x-model="reportCustomTitle" placeholder="Dejar vacío para usar el título de la investigación" />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 mt-4" style="justify-content: flex-end;">
+          <button class="btn btn-primary" @click="generateReport()" :disabled="reportLoading">
+            <span x-show="!reportLoading">📄 Generar Reporte</span>
+            <span x-show="reportLoading">Generando...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+  <script>
+    function socApp() {
+      return {
+        tab: 'investigate',
+        loading: false,
+        loadingMsg: '',
+        errorMsg: '',
+
+        // Form
+        form: { title: '', analyst: 'Analista SOC', notes: '' },
+        iocRaw: '',
+        parsedIOCs: [],
+
+        // Results
+        lastInvestigation: null,
+        openCards: [],
+
+        // History
+        history: [],
+        historyLoading: false,
+
+        // Report
+        reportFormat: 'pdf',
+        reportClientName: '',
+        reportCustomTitle: '',
+        reportLoading: false,
+        reportSuccess: false,
+        reportError: '',
+        reportDownloadUrl: '',
+
+        // Health
+        health: {},
+        currentTime: '',
+
+        async init() {
+          this.updateTime();
+          setInterval(() => this.updateTime(), 1000);
+          try {
+            const res = await fetch('/health');
+            this.health = await res.json();
+          } catch (e) {}
+        },
+
+        updateTime() {
+          this.currentTime = new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+        },
+
+        parseIOCs() {
+          const lines = this.iocRaw
+            .split(/[\n,;]+/)
+            .map(l => l.trim())
+            .filter(l => l.length > 0);
+
+          this.parsedIOCs = [...new Set(lines)].map(v => ({
+            value: v,
+            type: this.detectIOCType(v),
+            typeLabel: this.getTypeLabel(v),
+          }));
+        },
+
+        detectIOCType(v) {
+          if (/^[a-fA-F0-9]{64}$/.test(v)) return 'hash';
+          if (/^[a-fA-F0-9]{40}$/.test(v)) return 'hash';
+          if (/^[a-fA-F0-9]{32}$/.test(v)) return 'hash';
+          if (/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/.test(v)) return 'ip';
+          if (/^https?:\/\//.test(v)) return 'url';
+          if (/^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/.test(v)) return 'domain';
+          return 'unknown';
+        },
+
+        getTypeLabel(v) {
+          const t = this.detectIOCType(v);
+          const labels = { ip: 'IP', domain: 'DOMAIN', hash: 'HASH', url: 'URL', unknown: '?' };
+          return labels[t] || '?';
+        },
+
+        removeIOC(idx) {
+          this.parsedIOCs.splice(idx, 1);
+          // Rebuild raw input
+          this.iocRaw = this.parsedIOCs.map(i => i.value).join('\n');
+        },
+
+        async runInvestigation() {
+          this.errorMsg = '';
+          this.loading = true;
+          this.loadingMsg = 'Detectando tipos de IOC...';
+
+          const msgs = [
+            'Consultando VirusTotal...',
+            'Consultando AbuseIPDB...',
+            'Consultando Shodan...',
+            'Consolidando resultados...',
+            'Calculando score de riesgo...',
+          ];
+          let mi = 0;
+          const msgInterval = setInterval(() => {
+            this.loadingMsg = msgs[mi % msgs.length];
+            mi++;
+          }, 1500);
+
+          try {
+            const payload = {
+              title: this.form.title || 'Investigación ' + new Date().toLocaleDateString(),
+              analyst_name: this.form.analyst || 'Analista SOC',
+              iocs: this.parsedIOCs.map(i => ({ value: i.value })),
+              notes: this.form.notes,
+            };
+
+            const res = await fetch('/api/v1/investigations/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+              const err = await res.json();
+              throw new Error(err.detail || 'Error en el servidor');
+            }
+
+            this.lastInvestigation = await res.json();
+            // Auto-open first few cards
+            this.openCards = this.lastInvestigation.ioc_results.slice(0, 3).map((_, i) => i);
+            this.tab = 'results';
+
+          } catch (e) {
+            this.errorMsg = 'Error: ' + e.message;
+          } finally {
+            clearInterval(msgInterval);
+            this.loading = false;
+            this.loadingMsg = '';
+          }
+        },
+
+        toggleCard(idx) {
+          const pos = this.openCards.indexOf(idx);
+          if (pos >= 0) this.openCards.splice(pos, 1);
+          else this.openCards.push(idx);
+        },
+
+        async loadHistory() {
+          this.historyLoading = true;
+          try {
+            const res = await fetch('/api/v1/investigations/');
+            this.history = await res.json();
+          } catch (e) {
+            console.error(e);
+          } finally {
+            this.historyLoading = false;
+          }
+        },
+
+        async loadInvestigation(id) {
+          try {
+            const res = await fetch(`/api/v1/investigations/${id}`);
+            this.lastInvestigation = await res.json();
+            this.openCards = [0];
+            this.tab = 'results';
+          } catch (e) {
+            console.error(e);
+          }
+        },
+
+        async generateReport() {
+          if (!this.lastInvestigation) return;
+          this.reportLoading = true;
+          this.reportSuccess = false;
+          this.reportError = '';
+
+          try {
+            const payload = {
+              investigation_id: this.lastInvestigation.id,
+              format: this.reportFormat,
+              client_name: this.reportClientName || null,
+              custom_title: this.reportCustomTitle || null,
+              include_raw_data: false,
+            };
+
+            const res = await fetch('/api/v1/reports/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+              const err = await res.json();
+              throw new Error(err.detail || 'Error generando reporte');
+            }
+
+            const report = await res.json();
+            this.reportDownloadUrl = report.download_url;
+            this.reportSuccess = true;
+
+          } catch (e) {
+            this.reportError = 'Error: ' + e.message;
+          } finally {
+            this.reportLoading = false;
+          }
+        },
+
+        getRiskColor(level) {
+          const colors = {
+            critical: '#ff3c3c',
+            high: '#ff7a00',
+            medium: '#ffcc00',
+            low: '#44cc66',
+            info: '#4488ff',
+          };
+          return colors[level] || colors.info;
+        },
+
+        formatDate(dt) {
+          if (!dt) return '';
+          return new Date(dt).toLocaleString('es-ES', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit',
+          });
+        },
+      };
+    }
+  </script>
+</body>
+</html>
